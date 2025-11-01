@@ -1,37 +1,40 @@
 <?php get_header(); ?>
 
-<main>
-    <section id="hero">
-        <h2>آینده ای روشن با انرژی خورشیدی</h2>
-        <p>ما راه حل های انرژی خورشیدی پایدار و مقرون به صرفه ارائه می دهیم.</p>
-        <a href="#contact" class="cta-button">با ما تماس بگیرید</a>
-    </section>
+<div class="container mx-auto px-6 py-12">
+    <?php
+    if ( have_posts() ) :
+        while ( have_posts() ) :
+            the_post();
+            ?>
+            <article id="post-<?php the_ID(); ?>" <?php post_class( 'mb-12' ); ?>>
+                <header class="entry-header mb-4">
+                    <?php the_title( sprintf( '<h2 class="entry-title text-3xl font-bold leading-tight mb-2"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
+                </header>
 
-    <section id="about">
-        <h3>درباره ما</h3>
-        <p>ما یک تیم از متخصصان با تجربه در زمینه انرژی خورشیدی هستیم که به ارائه بهترین راه حل ها برای مشتریان خود متعهد هستیم.</p>
-    </section>
+                <?php if ( has_post_thumbnail() ) : ?>
+                    <div class="post-thumbnail mb-4">
+                        <?php the_post_thumbnail( 'large', array( 'class' => 'rounded-lg shadow-lg' ) ); ?>
+                    </div>
+                <?php endif; ?>
 
-    <section id="services">
-        <h3>خدمات ما</h3>
-        <ul>
-            <li>نصب پنل های خورشیدی</li>
-            <li>نگهداری و تعمیرات</li>
-            <li>مشاوره انرژی</li>
-        </ul>
-    </section>
+                <div class="entry-content prose lg:prose-lg max-w-none">
+                    <?php the_content(); ?>
+                </div>
+            </article>
+            <?php
+        endwhile;
 
-    <section id="projects">
-        <h3>پروژه های ما</h3>
-        <p>نمونه هایی از پروژه های موفق ما را در اینجا ببینید.</p>
-    </section>
+        the_posts_pagination(
+            array(
+                'prev_text' => __( 'قبلی', 'solarenergy' ),
+                'next_text' => __( 'بعدی', 'solarenergy' ),
+            )
+        );
 
-    <section id="contact">
-        <h3>تماس با ما</h3>
-        <p>برای فعال کردن فرم تماس، لطفاً یک افزونه فرم تماس مانند Contact Form 7 را نصب کنید و شورت‌کد آن را در اینجا قرار دهید.</p>
-        <p>مثال: <code>[contact-form-7 id="123" title="Contact form 1"]</code></p>
-        <?php // echo do_shortcode('[your-contact-form-shortcode]'); ?>
-    </section>
-</main>
+    else :
+        get_template_part( 'template-parts/content', 'none' );
+    endif;
+    ?>
+</div>
 
 <?php get_footer(); ?>
