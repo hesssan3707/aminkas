@@ -6,11 +6,11 @@ function solarenergy_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'solarenergy_scripts' );
 
-function register_nav_menu() {
+function solarenergy_register_nav_menu() {
     register_nav_menus( array(
         'primary' => __( 'Primary Menu', 'solarenergytheme' ),
     ) );
 }
-add_action( 'after_setup_theme', 'register_nav_menu' );
+add_action( 'after_setup_theme', 'solarenergy_register_nav_menu' );
 
 ?>
