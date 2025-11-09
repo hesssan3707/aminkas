@@ -5,9 +5,24 @@ import { MailIcon, PhoneIcon, LocationMarkerIcon } from '../components/IconCompo
 
 interface ContactProps {
   t: Translations;
+  currentLanguage: 'en' | 'fa';
 }
 
-const Contact: React.FC<ContactProps> = ({ t }) => {
+const Contact: React.FC<ContactProps> = ({ t, currentLanguage }) => {
+  declare global {
+    interface Window {
+      __SOLAR_CONTACT_INFO__?: { address?: string; phone?: string; email?: string; addressEn?: string; addressFa?: string };
+      __SOLAR_SITE__?: { address_en?: string; address_fa?: string; phone?: string; email?: string; adminEmail?: string };
+    }
+  }
+  const overrides = typeof window !== 'undefined' ? window.__SOLAR_CONTACT_INFO__ : undefined;
+  const site = typeof window !== 'undefined' ? window.__SOLAR_SITE__ : undefined;
+  const address = (() => {
+    if (currentLanguage === 'fa') return overrides?.addressFa || site?.address_fa || overrides?.address || t.contact.address;
+    return overrides?.addressEn || site?.address_en || overrides?.address || t.contact.address;
+  })();
+  const phone = overrides?.phone || site?.phone || t.contact.phone;
+  const email = overrides?.email || site?.email || site?.adminEmail || t.contact.email;
   return (
     <div className="py-16 lg:py-24 bg-gray-50 animate-fadeIn">
       <div className="container mx-auto px-6">
@@ -53,15 +68,15 @@ const Contact: React.FC<ContactProps> = ({ t }) => {
               <ul className="space-y-6 text-gray-600">
                 <li className="flex items-start">
                   <LocationMarkerIcon className="h-7 w-7 text-blue-600 flex-shrink-0 mt-1" />
-                  <span className="ms-4 text-lg">{t.contact.address}</span>
+                  <span className="ms-4 text-lg">{address}</span>
                 </li>
                 <li className="flex items-center">
                   <PhoneIcon className="h-7 w-7 text-blue-600 flex-shrink-0" />
-                  <span className="ms-4 text-lg">{t.contact.phone}</span>
+                  <span className="ms-4 text-lg">{phone}</span>
                 </li>
                 <li className="flex items-center">
                   <MailIcon className="h-7 w-7 text-blue-600 flex-shrink-0" />
-                  <span className="ms-4 text-lg">{t.contact.email}</span>
+                  <span className="ms-4 text-lg">{email}</span>
                 </li>
               </ul>
             </div>

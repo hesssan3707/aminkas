@@ -5,9 +5,10 @@ import { SunIcon } from '../components/IconComponents';
 
 interface HomeProps {
   t: Translations;
+  setView?: (view: 'home' | 'activities' | 'news' | 'about' | 'contact') => void;
 }
 
-const Home: React.FC<HomeProps> = ({ t }) => {
+const Home: React.FC<HomeProps> = ({ t, setView }) => {
   return (
     <div className="animate-fadeIn">
       {/* Hero Section */}
@@ -20,7 +21,14 @@ const Home: React.FC<HomeProps> = ({ t }) => {
         <div className="relative container mx-auto px-6 py-32 lg:py-48 text-center">
           <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-4">{t.hero.title}</h1>
           <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8">{t.hero.subtitle}</p>
-          <button className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-3 px-8 rounded-full text-lg transition-transform transform hover:scale-105">
+          <button
+            className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-3 px-8 rounded-full text-lg transition-transform transform hover:scale-105"
+            onClick={() => {
+              if (setView) {
+                setView('activities');
+              }
+            }}
+          >
             {t.hero.cta}
           </button>
         </div>

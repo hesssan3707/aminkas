@@ -15,6 +15,24 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ setView, currentLanguage, setLanguage, t }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  declare global {
+    interface Window {
+      __SOLAR_CONTACT_INFO__?: { companyName?: string; companyNameEn?: string; companyNameFa?: string };
+      __SOLAR_SITE__?: { title?: string; title_en?: string; title_fa?: string };
+    }
+  }
+  const siteTitle = (() => {
+    if (typeof window !== 'undefined') {
+      const site = window.__SOLAR_SITE__;
+      const contact = window.__SOLAR_CONTACT_INFO__;
+      if (currentLanguage === 'fa') {
+        return site?.title_fa || contact?.companyNameFa || site?.title || contact?.companyName || t.header.companyName;
+      }
+      return site?.title_en || contact?.companyNameEn || site?.title || contact?.companyName || t.header.companyName;
+    }
+    return t.header.companyName;
+  })();
+
   const navLinks: { view: View; label: string }[] = [
     { view: 'home', label: t.header.home },
     { view: 'activities', label: t.header.activities },
@@ -38,7 +56,7 @@ const Header: React.FC<HeaderProps> = ({ setView, currentLanguage, setLanguage, 
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center cursor-pointer" onClick={() => handleSetView('home')}>
             <SunIcon className="h-8 w-8 text-yellow-500" />
-            <h1 className={`ms-2 text-xl font-bold text-gray-800 ${currentLanguage === 'fa' ? 'font-fa' : 'font-en'}`}>{t.header.companyName}</h1>
+            <h1 className={`ms-2 text-xl font-bold text-gray-800 ${currentLanguage === 'fa' ? 'font-fa' : 'font-en'}`}>{siteTitle}</h1>
           </div>
           
           <div className="hidden md:flex items-center space-x-4 lg:space-x-8">

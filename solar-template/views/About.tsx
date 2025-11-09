@@ -4,21 +4,44 @@ import type { Translations } from '../types';
 
 interface AboutProps {
   t: Translations;
+  currentLanguage: 'en' | 'fa';
 }
 
-const About: React.FC<AboutProps> = ({ t }) => {
+const About: React.FC<AboutProps> = ({ t, currentLanguage }) => {
+  declare global {
+    interface Window {
+      __SOLAR_CONTACT_INFO__?: { companyName?: string; companyNameEn?: string; companyNameFa?: string };
+      __SOLAR_SITE__?: { title?: string; title_en?: string; title_fa?: string };
+    }
+  }
+  const site = typeof window !== 'undefined' ? window.__SOLAR_SITE__ : undefined;
+  const contact = typeof window !== 'undefined' ? window.__SOLAR_CONTACT_INFO__ : undefined;
+  const companyName = currentLanguage === 'fa'
+    ? (site?.title_fa || contact?.companyNameFa || site?.title || contact?.companyName || '')
+    : (site?.title_en || contact?.companyNameEn || site?.title || contact?.companyName || '');
+  const aboutTitle = currentLanguage === 'fa' ? `درباره ${companyName || 'شرکت'}` : `About ${companyName || 'Our Company'}`;
+  const replaceCompany = (text: string) => {
+    if (!text || !companyName) return text;
+    let out = text;
+    out = out.replace(/Solar\s+Transition\s+Co\.?/g, companyName);
+    out = out.replace(/شرکت\s+گذار\s+به\s+خورشید/g, companyName);
+    return out;
+  };
+  const p1 = replaceCompany(t.about.p1);
+  const p2 = replaceCompany(t.about.p2);
+  const p3 = replaceCompany(t.about.p3);
   return (
     <div className="py-16 lg:py-24 bg-white animate-fadeIn">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <h1 className="text-4xl lg:text-5xl font-extrabold text-blue-600 mb-4">{t.about.title}</h1>
+          <h1 className="text-4xl lg:text-5xl font-extrabold text-blue-600 mb-4">{aboutTitle}</h1>
         </div>
 
         <div className="grid lg:grid-cols-5 gap-12 items-center">
           <div className="lg:col-span-3 prose lg:prose-xl max-w-none text-gray-600">
-            <p>{t.about.p1}</p>
-            <p>{t.about.p2}</p>
-            <p>{t.about.p3}</p>
+            <p>{p1}</p>
+            <p>{p2}</p>
+            <p>{p3}</p>
           </div>
           <div className="lg:col-span-2">
             <img 
