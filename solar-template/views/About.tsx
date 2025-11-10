@@ -23,8 +23,12 @@ const About: React.FC<AboutProps> = ({ t, currentLanguage }) => {
   const replaceCompany = (text: string) => {
     if (!text || !companyName) return text;
     let out = text;
-    out = out.replace(/Solar\s+Transition\s+Co\.?/g, companyName);
-    out = out.replace(/شرکت\s+گذار\s+به\s+خورشید/g, companyName);
+    // English legacy name
+    out = out.replace(/Solar\s+Transition\s+Co\.?/gi, companyName);
+    // Persian legacy name variants: optional "شرکت" and optional ZWNJ between words
+    const ws = "[\u200C\s]*"; // space or ZWNJ
+    const faPattern = new RegExp(`(?:شرکت${ws})?گذار${ws}به${ws}خورشید`, 'gu');
+    out = out.replace(faPattern, companyName);
     return out;
   };
   const p1 = replaceCompany(t.about.p1);

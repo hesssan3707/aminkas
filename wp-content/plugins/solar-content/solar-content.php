@@ -36,6 +36,30 @@ function solar_content_register_cpt() {
 }
 add_action('init', 'solar_content_register_cpt');
 
+// Register "Language" taxonomy for posts and activities
+function solar_content_register_language_taxonomy() {
+  $labels = [
+    'name' => 'Languages',
+    'singular_name' => 'Language',
+    'search_items' => 'Search Languages',
+    'all_items' => 'All Languages',
+    'edit_item' => 'Edit Language',
+    'update_item' => 'Update Language',
+    'add_new_item' => 'Add New Language',
+    'new_item_name' => 'New Language Name',
+    'menu_name' => 'Language',
+  ];
+  register_taxonomy('solar_language', ['post', 'activity'], [
+    'hierarchical' => false,
+    'labels' => $labels,
+    'show_ui' => true,
+    'show_admin_column' => true,
+    'query_var' => true,
+    'rewrite' => ['slug' => 'lang'],
+  ]);
+}
+add_action('init', 'solar_content_register_language_taxonomy', 11);
+
 // Seed sample posts and activities
 function solar_content_seed_content() {
   // Seed sample news posts (if not present)
@@ -60,13 +84,16 @@ function solar_content_seed_content() {
   foreach ($samples as $s) {
     $exists = get_page_by_title($s['post_title'], OBJECT, 'post');
     if (!$exists) {
-      wp_insert_post([
+      $post_id = wp_insert_post([
         'post_type' => 'post',
         'post_status' => 'publish',
         'post_title' => $s['post_title'],
         'post_content' => $s['post_content'],
         'post_excerpt' => $s['post_excerpt'],
       ]);
+      if (!is_wp_error($post_id)) {
+        wp_set_object_terms($post_id, ['en'], 'solar_language', false);
+      }
     }
   }
 
@@ -80,13 +107,16 @@ function solar_content_seed_content() {
   foreach ($activities as $a) {
     $exists = get_page_by_title($a['title'], OBJECT, 'activity');
     if (!$exists) {
-      wp_insert_post([
+      $act_id = wp_insert_post([
         'post_type' => 'activity',
         'post_status' => 'publish',
         'post_title' => $a['title'],
         'post_content' => $a['excerpt'],
         'post_excerpt' => $a['excerpt'],
       ]);
+      if (!is_wp_error($act_id)) {
+        wp_set_object_terms($act_id, ['en'], 'solar_language', false);
+      }
     }
   }
 }
@@ -95,6 +125,10 @@ function solar_content_seed_content() {
 function solar_content_activate() {
   // Ensure CPT exists before seeding
   solar_content_register_cpt();
+  solar_content_register_language_taxonomy();
+  // Ensure language terms exist
+  if (!term_exists('en', 'solar_language')) { wp_insert_term('en', 'solar_language'); }
+  if (!term_exists('fa', 'solar_language')) { wp_insert_term('fa', 'solar_language'); }
   solar_content_seed_content();
 }
 register_activation_hook(__FILE__, 'solar_content_activate');

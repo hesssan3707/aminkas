@@ -15,3 +15,4 @@
   </style>
 </head>
 <body <?php body_class('bg-gray-50 text-gray-800'); ?>>
+<div id="react-header"></div>
