@@ -36,7 +36,14 @@ const App: React.FC = () => {
     return 'home';
   };
   const [view, setView] = useState<View>(getInitialView());
-  const [language, setLanguage] = useState<Language>('fa');
+  const [language, setLanguage] = useState<Language>(() => {
+    try {
+      const saved = typeof window !== 'undefined' ? localStorage.getItem('solar_language') : null;
+      return saved === 'en' ? 'en' : 'fa';
+    } catch {
+      return 'fa';
+    }
+  });
   const [translations, setTranslations] = useState<Translations>(fa);
 
   const getTranslations = (lang: Language): Translations => {
@@ -57,6 +64,15 @@ const App: React.FC = () => {
       document.documentElement.lang = 'en';
       document.documentElement.dir = 'ltr';
     }
+  }, [language]);
+
+  // Persist language selection across refreshes
+  useEffect(() => {
+    try {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('solar_language', language);
+      }
+    } catch {}
   }, [language]);
 
   // Keep URL hash in sync for deep-linking/navigation from static header
