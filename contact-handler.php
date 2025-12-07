@@ -20,8 +20,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Save the message to the database
     if (save_message($conn, $name, $email, $subject, $message)) {
+        // Get language from form
+        $lang = isset($_POST['lang']) && $_POST['lang'] === 'en' ? 'en' : 'fa';
         // Redirect to a thank you page
-        header("Location: thank-you.php");
+        header("Location: thank-you.php?lang=" . $lang);
         exit;
     } else {
         // Handle database error
