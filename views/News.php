@@ -1,5 +1,5 @@
 <?php
-function display_news($translations, $posts) {
+function display_news($translations, $posts, $currentLanguage) {
 ?>
 <div class="py-16 lg:py-24 bg-gray-50 animate-fadeIn">
     <div class="container mx-auto px-6">
@@ -14,7 +14,7 @@ function display_news($translations, $posts) {
                     <div class="p-6 flex flex-col flex-grow">
                         <h3 class="text-xl font-bold text-gray-800 mb-3"><?php echo $post['title']; ?></h3>
                         <p class="text-gray-600 flex-grow"><?php echo mb_substr(strip_tags($post['content']), 0, 100) . '...'; ?></p>
-                        <a href="single.php?id=<?php echo $post['id']; ?>" class="mt-4 text-blue-600 hover:text-blue-800 font-semibold flex items-center self-start">
+                        <a href="single.php?id=<?php echo $post['id']; ?>&lang=<?php echo $currentLanguage; ?>" class="mt-4 text-blue-600 hover:text-blue-800 font-semibold flex items-center self-start">
                             <?php echo $translations['news']['readMore']; ?>
                             <?php ChevronRightIcon("w-5 h-5 ms-1"); ?>
                         </a>

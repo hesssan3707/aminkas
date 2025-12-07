@@ -1,5 +1,5 @@
 <?php
-function display_home($translations) {
+function display_home($translations, $currentLanguage) {
 ?>
 <div class="animate-fadeIn">
     <!-- Hero Section -->
@@ -8,7 +8,7 @@ function display_home($translations) {
         <div class="relative container mx-auto px-6 py-32 lg:py-48 text-center">
             <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-4"><?php echo $translations['hero']['title']; ?></h1>
             <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8"><?php echo $translations['hero']['subtitle']; ?></p>
-            <a href="?view=activities" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-3 px-8 rounded-full text-lg transition-transform transform hover:scale-105">
+            <a href="?view=activities&lang=<?php echo $currentLanguage; ?>" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-3 px-8 rounded-full text-lg transition-transform transform hover:scale-105">
                 <?php echo $translations['hero']['cta']; ?>
             </a>
         </div>

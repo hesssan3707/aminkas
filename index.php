@@ -73,7 +73,7 @@ require_once 'views/Contact.php';
                 display_activities($translations);
                 break;
             case 'news':
-                display_news($translations, $posts);
+                display_news($translations, $posts, $currentLanguage);
                 break;
             case 'about':
                 display_about($currentLanguage, $translations);
@@ -82,7 +82,7 @@ require_once 'views/Contact.php';
                 display_contact($translations);
                 break;
             default:
-                display_home($translations);
+                display_home($translations, $currentLanguage);
                 break;
         }
         ?>
