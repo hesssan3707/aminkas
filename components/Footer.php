@@ -30,7 +30,7 @@ function display_footer($currentLanguage, $translations) {
                 <ul class="mt-4 space-y-2">
                     <?php foreach ($navLinks as $link): ?>
                         <li>
-                            <a href="?view=<?php echo $link['view']; ?>" class="text-gray-400 hover:text-white transition-colors"><?php echo $link['label']; ?></a>
+                            <a href="?view=<?php echo $link['view']; ?>&lang=<?php echo $currentLanguage; ?>" class="text-gray-400 hover:text-white transition-colors"><?php echo $link['label']; ?></a>
                         </li>
                     <?php endforeach; ?>
                 </ul>
