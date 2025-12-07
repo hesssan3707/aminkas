@@ -20,11 +20,11 @@ function display_header($currentView, $currentLanguage, $translations) {
 
             <div class="hidden md:flex items-center space-x-4 lg:space-x-8">
                 <?php foreach ($navLinks as $link): ?>
-                    <a href="?view=<?php echo $link['view']; ?>" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                    <a href="?view=<?php echo $link['view']; ?>&lang=<?php echo $currentLanguage; ?>" class="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                         <?php echo $link['label']; ?>
                     </a>
                 <?php endforeach; ?>
-                <a href="?lang=<?php echo $currentLanguage === 'en' ? 'fa' : 'en'; ?>" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                <a href="?view=<?php echo $currentView; ?>&lang=<?php echo $currentLanguage === 'en' ? 'fa' : 'en'; ?>" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
                     <?php echo $translations['header']['switchLanguage']; ?>
                 </a>
             </div>
@@ -40,12 +40,12 @@ function display_header($currentView, $currentLanguage, $translations) {
     <div id="mobile-menu" class="md:hidden bg-white border-t hidden">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <?php foreach ($navLinks as $link): ?>
-                <a href="?view=<?php echo $link['view']; ?>" class="text-gray-600 hover:bg-gray-100 hover:text-blue-600 block w-full text-start px-3 py-2 rounded-md text-base font-medium">
+                <a href="?view=<?php echo $link['view']; ?>&lang=<?php echo $currentLanguage; ?>" class="text-gray-600 hover:bg-gray-100 hover:text-blue-600 block w-full text-start px-3 py-2 rounded-md text-base font-medium">
                     <?php echo $link['label']; ?>
                 </a>
             <?php endforeach; ?>
             <div class="px-3 py-2">
-                <a href="?lang=<?php echo $currentLanguage === 'en' ? 'fa' : 'en'; ?>" class="bg-blue-500 hover:bg-blue-600 text-white w-full block text-center px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                <a href="?view=<?php echo $currentView; ?>&lang=<?php echo $currentLanguage === 'en' ? 'fa' : 'en'; ?>" class="bg-blue-500 hover:bg-blue-600 text-white w-full block text-center px-4 py-2 rounded-md text-sm font-medium transition-colors">
                     <?php echo $translations['header']['switchLanguage']; ?>
                 </a>
             </div>
