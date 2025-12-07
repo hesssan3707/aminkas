@@ -13,7 +13,7 @@ function display_header($currentView, $currentLanguage, $translations) {
 <header class="bg-white shadow-md sticky top-0 z-50">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-20">
-            <a href="?view=home" class="flex items-center cursor-pointer">
+            <a href="?view=home&lang=<?php echo $currentLanguage; ?>" class="flex items-center cursor-pointer">
                 <?php SunIcon("h-8 w-8 text-yellow-500"); ?>
                 <h1 class="ms-2 text-xl font-bold text-gray-800 <?php echo $currentLanguage === 'fa' ? 'font-fa' : 'font-en'; ?>"><?php echo $translations['header']['companyName']; ?></h1>
             </a>

@@ -68,7 +68,7 @@ require_once 'views/Single.php';
     <?php display_header('news', $currentLanguage, $translations); ?>
 
     <main class="min-h-screen">
-        <?php display_single_post($post); ?>
+        <?php display_single_post($post, $currentLanguage, $translations); ?>
     </main>
 
     <?php display_footer($currentLanguage, $translations); ?>

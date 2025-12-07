@@ -1,6 +1,6 @@
 <?php
 function display_about($currentLanguage, $translations) {
-    $companyName = "انرژی امین کسری";
+    $companyName = $translations['header']['companyName'];
     $aboutTitle = $currentLanguage === 'fa' ? "درباره " . $companyName : "About " . $companyName;
 ?>
 <div class="py-16 lg:py-24 bg-white animate-fadeIn">
@@ -11,9 +11,9 @@ function display_about($currentLanguage, $translations) {
 
         <div class="grid lg:grid-cols-5 gap-12 items-center">
             <div class="lg:col-span-3 prose lg:prose-xl max-w-none text-gray-600">
-                <p><?php echo str_replace("Solar Transition Co.", $companyName, $translations['about']['p1']); ?></p>
-                <p><?php echo str_replace("Solar Transition Co.", $companyName, $translations['about']['p2']); ?></p>
-                <p><?php echo str_replace("Solar Transition Co.", $companyName, $translations['about']['p3']); ?></p>
+                <p><?php echo str_replace("Amin Kasra Energy", $companyName, $translations['about']['p1']); ?></p>
+                <p><?php echo str_replace("Amin Kasra Energy", $companyName, $translations['about']['p2']); ?></p>
+                <p><?php echo str_replace("Amin Kasra Energy", $companyName, $translations['about']['p3']); ?></p>
             </div>
             <div class="lg:col-span-2">
                 <img src="https://picsum.photos/seed/team/600/700" alt="Company Team" class="rounded-lg shadow-2xl w-full h-auto object-cover">
