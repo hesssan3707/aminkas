@@ -8,10 +8,9 @@ $options = get_options($conn);
 // Include translations
 require_once 'localization.php';
 
-// I'm hardcoding the language to 'fa' for the thank you page for simplicity
-// A more robust solution would detect the language from the session or a cookie
-$currentLanguage = 'fa';
-$translations = $fa_translations;
+// Determine current language
+$currentLanguage = isset($_GET['lang']) && $_GET['lang'] === 'en' ? 'en' : 'fa';
+$translations = $currentLanguage === 'en' ? $en_translations : $fa_translations;
 
 
 // Include components
@@ -48,7 +47,7 @@ require_once 'components/IconComponents.php';
         <div class="text-center p-12 bg-white rounded-lg shadow-xl">
             <h1 class="text-4xl font-extrabold text-green-500 mb-4"><?php echo $translations['thank_you']['title']; ?></h1>
             <p class="text-lg text-gray-600 mb-8"><?php echo $translations['thank_you']['message']; ?></p>
-            <a href="index.php" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-md transition-colors">
+            <a href="index.php?lang=<?php echo $currentLanguage; ?>" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-md transition-colors">
                 <?php echo $translations['thank_you']['back_home']; ?>
             </a>
         </div>

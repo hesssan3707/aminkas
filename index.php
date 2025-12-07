@@ -79,7 +79,7 @@ require_once 'views/Contact.php';
                 display_about($currentLanguage, $translations);
                 break;
             case 'contact':
-                display_contact($translations);
+                display_contact($translations, $currentLanguage);
                 break;
             default:
                 display_home($translations, $currentLanguage);

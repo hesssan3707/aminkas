@@ -1,5 +1,5 @@
 <?php
-function display_contact($translations) {
+function display_contact($translations, $currentLanguage) {
     $address = $translations['contact']['address'];
     $phone = $translations['contact']['phone'];
     $email = $translations['contact']['email'];
@@ -15,6 +15,7 @@ function display_contact($translations) {
             <!-- Contact Form -->
             <div class="bg-white p-8 rounded-lg shadow-lg">
                 <form action="contact-handler.php" method="POST">
+                    <input type="hidden" name="lang" value="<?php echo $currentLanguage; ?>">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div>
                             <label for="name" class="block text-sm font-medium text-gray-700"><?php echo $translations['contact']['formName']; ?></label>
